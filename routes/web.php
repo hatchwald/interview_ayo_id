@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PlayerController;
+use App\Http\Livewire\ShowPlayers;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +19,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('dashboard')->group(function () {
+        Route::get('/', function () {
+            return view('dashboard');
+        })->name('dashboard');
+        Route::resource('player', PlayerController::class)->except([
+            'get'
+        ]);
+        Route::get('player', ShowPlayers::class);
+    });
+});
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

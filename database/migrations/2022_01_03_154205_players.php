@@ -20,7 +20,7 @@ class Players extends Migration
             $table->integer('weight');
             $table->enum('position', ['penyerang', 'gelandang', 'bertahan', 'penjaga gawang']);
             $table->integer('shirt_number');
-            $table->integer('team_id');
+            $table->integer('team_id')->nullable();
             $table->timestamps();
         });
     }
